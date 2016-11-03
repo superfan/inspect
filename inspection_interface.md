@@ -1,11 +1,12 @@
 # 服务端接口定义
 
-> 版本：v1.0  
+> 版本：v1.1  
 > 作者：zangwei
 
 ## 修订记录
 
 1. v1.0, 2016-10-31, zangwei, 初始版本
+2. v1.1, 2016-11-3, zangwei, 调整部分接口
 
 
 ## 概述
@@ -170,9 +171,6 @@
       code: 0, // 0: 成功, 其它值: 失败
       statusCode: 200,
       message: '操作描述', // 失败原因
-      data: {
-        userId: '用户Id'
-      }
    }
    ```
 
@@ -180,11 +178,11 @@
 
 获取用户信息接口
 
-* URL: `v1/mobile/userId/{userId}`
+* URL: `v1/mobile/account/{account}`
 * METHOD: `GET`
 
 * 参数:
-    * userId: 用户Id
+    * account: 用户账号
 
 * 回复内容：
 
@@ -194,7 +192,6 @@
       statusCode: 200,
       message: '操作描述',
       data: {
-         "userId": 1,
          "userName": "sample string 2",
          "sex": 1,
          "account": "sample string 3",
@@ -209,11 +206,11 @@
 
 获取获取安检信息总数量接口。
 
-* URL: `v1/mobile/inspections/count?userId={userId}&stationCode={stationCode}`
+* URL: `v1/mobile/inspections/count?account={account}&stationCode={stationCode}`
 * METHOD: `GET`
 
 * 参数:
-   * userId: 用户Id
+   * account: 用户账号
    * stationCode: 站点编号
 
 * 返回内容：
@@ -233,11 +230,11 @@
 
 分段获取安检信息接口。
 
-* URL: `v1/mobile/inspections/list?userId={userId}&stationCode={stationCode}&since={since}&count={count}`
+* URL: `v1/mobile/inspections/list?account={account}&stationCode={stationCode}&since={since}&count={count}`
 * METHOD: `GET`
 
 * 参数:
-   * userId: 用户编号
+   * account: 用户账号
    * stationCode: 站点编号
    * since: 可选，默认为：1，开始索引
    * count: 可选，默认为：1000，记录数
@@ -253,7 +250,7 @@
               id: 123456, // int, 后台数据库表主键值, 唯一
               year: 2016, // int, 年份
               month: 10, // int, 月份
-              inspectNumber: '安检编号', // string  
+              inspectionId: '安检编号', // string, 唯一
               customerId: '用户编号', // string
               customerName: '用户名称', // string
               customerAddress: '用户地址', // string
@@ -296,10 +293,10 @@
 
 安检回填录入保存接口。
 
-* URL: `v1/mobile/inspections/reply?userId={userId}&stationCode={stationCode}`
+* URL: `v1/mobile/inspections/reply?account={account}&stationCode={stationCode}`
 * METHOD: `POST`
 * 参数:
-   * userId: 用户编号
+   * account: 用户账号
    * stationCode: 站点编号
 
 * 请求内容:
@@ -307,7 +304,28 @@
     {
      [
       {
-        待定 
+        inspectionId: '安检编号', // string
+
+        insepector: '安检联系人', // string
+        telephone: '联系电话', // string
+        inspectExponent: 40, // int, 安检指数采集
+
+        doorLock: true, // 门锁, boolean, true: 门锁, false: 门开
+        inpection: true, // 安检, boolean, true: 安检，false: 非安检
+        rectification: true, // 整改, boolean, true: 整改, false: 非整改
+
+        // 安检内容
+        intakTube: 'exposedPipe', // 进气管, string, exposedPipe: 明管, unexposedPipe: 非明管
+        meterValve: 'ballValve', // 表前阀门, string, ballValve: 球阀, rotateTap: 旋塞
+        meterPosition: 'inCupboard', // 表位, string, inCupboard: 橱内, outCupboard: 橱外
+        gasPipe: 'exposedPipe', // 用气管, string, exposedPipe: 明管, unexposedPipe: 非明管
+        stoveValve: 'ballValve', // 灶前阀, string, ballValve: 球阀, rotateTap: 旋塞
+        stoveConnector: 'metal', // 灶具连接, string, metal: 金属, rubber: 橡胶
+        gasStove: 'safty', // 燃气灶, string, safty: 安全, other: 其他
+        waterHeater: 'strongExhaust', // 热水器. string, strongExhaust: 强排, other: 其他
+        
+        // 整改内容 
+        // 待添加
       },
       ...
      ]
@@ -324,13 +342,13 @@
         {
           isSuccess: 'true',
           message: '',
-		  id: '编号',
+		  inspectionId: '安检编号', // string
           extend: 'json string' // 扩展信息, 可为空
 		},
         {
           isSuccess: 'false',
           message: '失败原因',
-		  id: '编号',
+		  inspectionId: '安检编号', // string
           extend: 'json string' // 扩展信息, 可为空
 		},
         ...
@@ -340,14 +358,35 @@
 
 ## 上传多个文件
 
-上传指定文件。如果文件需要和某一个任务关联需要先上传文件，然后再做关联某一个任务。比如回复任务时有图片需要上传，那么就需要先调用上传接口，上传成功后会返回一个fileId。
+上传多个文件。
 
-* URL: `v1/mobile/files/upload`
+* URL: `v1/mobile/files/upload?account={account}&stationCode={stationCode}`
 * METHOD: `POST`
+* 参数:
+   * account: 用户账号
+   * stationCode: 站点编号
 
 * 请求内容：
 
   文件内容, byte数组，支持多个文件同时上传，同时上传文件名
+  
+  ```
+  {
+    [
+      {
+        inspectionId: '安检编号1', // string
+        fileName: '文件名', // string, 如: 123.jpg, 234.3gp
+        字节流, // 文件数据
+      }
+      {
+        inspectionId: '安检编号2', // string
+        fileName: '文件名', // string, 如: 123.jpg, 234.3gp
+        字节流, // 文件数据
+      }
+      ...
+    ]
+  }
+  ```
 
 * 回复内容：
 
@@ -377,43 +416,6 @@
 
 ![demo](http://128.1.3.186:8095/Update/hotline/shanghai/20160928143321.png)
 
-
-## 上传任务文件关联关系
-
-给一个任务上传文件，首先需要先调用文件上传接口，然后调用该方法告知某一个任务
-和那几个文件做关联。
-
-* URL: `v1/mobile/inspection/{inspectionId}/fileInfos/upload`
-* METHOD: `POST`
-
-* 参数：
-   * inspectionId: 安检编号???
-
-* 请求内容：
-
-	```
-	{
-		[
-          {
-            url: '文件url'，
-            fileType: '文件类型',
-            fileSize: '文件大小',
-            fileHash: '文件hash'
-          }
-          ....
-       ]
-    }
-    ```
-
-* 回复内容：
-
-   ```
-   {
-      code: 0,
-      statusCode: 200,
-      message: '操作描述'
-   }
-   ```
 
 ## 获取词语信息
 
@@ -456,7 +458,7 @@
 
     ```
     {
-      userId: 123,         // 用户编号
+      account: '用户账号',         // 用户编号
       deviceId: '123123',  // 设备Id
       imei: 'IMEI号',
       location: {
@@ -481,7 +483,7 @@
       message: '操作描述',
       data: [
        {               
-         TBD
+         time: 123456, // int, utc时间（服务器时间）
        },
        ...
      ]
