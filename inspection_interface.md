@@ -254,33 +254,16 @@
               customerId: '用户编号', // string
               customerName: '用户名称', // string
               customerAddress: '用户地址', // string
+              contact: '联系人', // string
+              telephone: '联系电话', // string
               type: 1, // int, 安检类型
               dispatchTime: 派工日期, // int, utc时间
               dispatcher: '派工人', // string
               bookId: '统册号', // string
               stationCode: '站点编号', // string, 
-              inspector: '安检人员', //string
-              inspectTime: 安检日期, // int, utc时间
-              lockNumber: '门锁编号', // string
-              printTime: '打印时间', // int, utc时间
-              inspectDepartment: '安检单位', // string
-              inspectResult: 安检结果, // int, ???
-              replyType: 安检回填类型, // int
-              inputTime: 输入日期, // int, utc时间
-              rectifyNumber: '整改编号', // string
-              inspectType: 安检种类, // int
-              contact: '联系人', // string
-              telephone: '联系电话', // string
+              bookSortIndex: 册内序号, // int
               state: 状态, // int
               cardId: '表号', // string
-              inspectorPhone: '安检联系人电话', // string
-              logitude: 123.456789, // double, 经度
-              latitude: 31.456798, // double, 维度
-              isFloorHeat: true, // boolean, true: 是，false: 否
-              inputer: '输入人', // string
-              lockId: 门锁派工,社区安检门锁的ID, // int
-              bookSortIndex: 册内序号, // int
-              inspectExponent: 安检指数, // int
               extend: 'json string' // 扩展信息, 可为空
           },
           ......
@@ -308,24 +291,33 @@
 
         insepector: '安检联系人', // string
         telephone: '联系电话', // string
+        inspectTime: '安检日期', // utc
+        lockNumber: '门锁编号' // string
+        logitude: '经度' // double
+        latitude: '纬度' // double
+        floorheat: '地暖' // boolean
         inspectExponent: 40, // int, 安检指数采集
 
         doorLock: true, // 门锁, boolean, true: 门锁, false: 门开
         inpection: true, // 安检, boolean, true: 安检，false: 非安检
         rectification: true, // 整改, boolean, true: 整改, false: 非整改
 
-        // 安检内容
-        intakTube: 'exposedPipe', // 进气管, string, exposedPipe: 明管, unexposedPipe: 非明管
-        meterValve: 'ballValve', // 表前阀门, string, ballValve: 球阀, rotateTap: 旋塞
-        meterPosition: 'inCupboard', // 表位, string, inCupboard: 橱内, outCupboard: 橱外
-        gasPipe: 'exposedPipe', // 用气管, string, exposedPipe: 明管, unexposedPipe: 非明管
-        stoveValve: 'ballValve', // 灶前阀, string, ballValve: 球阀, rotateTap: 旋塞
-        stoveConnector: 'metal', // 灶具连接, string, metal: 金属, rubber: 橡胶
-        gasStove: 'safty', // 燃气灶, string, safty: 安全, other: 其他
-        waterHeater: 'strongExhaust', // 热水器. string, strongExhaust: 强排, other: 其他
-        
-        // 整改内容 
-        // 待添加
+        inspectContent:[//安检内容
+                         {
+                          "group": 1,
+                          "child": 8,
+                          "isNormal": false,
+                          "reforms": "31,32"
+                         },
+
+                         {
+                          "group": 1,
+                          "child": 8,
+                          "isNormal": false,
+                          "reforms": "31,32"
+                          }
+                         ...
+                       ]
       },
       ...
      ]
