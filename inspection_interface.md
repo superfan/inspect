@@ -1,12 +1,13 @@
 # 服务端接口定义
 
-> 版本：v1.1  
+> 版本：v1.2  
 > 作者：zangwei
 
 ## 修订记录
 
 1. v1.0, 2016-10-31, zangwei, 初始版本
 2. v1.1, 2016-11-3, zangwei, 调整部分接口
+3. v1.2, 2016-11-25，zhangjing,调整回填接口
 
 
 ## 概述
@@ -284,44 +285,29 @@
 
 * 请求内容:
     ```
+    [
     {
-     [
-      {
-        inspectionId: '安检编号', // string
-
-        insepector: '安检联系人', // string
-        telephone: '联系电话', // string
-        inspectTime: '安检日期', // utc
-        lockNumber: '门锁编号' // string
-        logitude: '经度' // double
-        latitude: '纬度' // double
-        floorheat: '地暖' // boolean
-        inspectExponent: 40, // int, 安检指数采集
-
-        doorLock: true, // 门锁, boolean, true: 门锁, false: 门开
-        inpection: true, // 安检, boolean, true: 安检，false: 非安检
-        rectification: true, // 整改, boolean, true: 整改, false: 非整改
-
-        inspectContent:[//安检内容
-                         {
-                          "group": 1,
-                          "child": 8,
-                          "isNormal": false,
-                          "reforms": "31,32"
-                         },
-
-                         {
-                          "group": 1,
-                          "child": 8,
-                          "isNormal": false,
-                          "reforms": "31,32"
-                          }
-                         ...
-                       ]
-      },
-      ...
-     ]
+        "id": 11111111,//后台数据库表主键值, 唯一
+        "inspectionId": "45201600005190968", //安检编号
+        "customerId": "123456", //用户编号
+        "cardId": "xxxxxxxxxxxxxxx", //表号
+        "type":1,//安检类型
+        "insepector": "张三三", //安检员
+        "telephone": "151512222222", //联系电话
+        "inspectTime": 1480039081, //安检日期
+        "lockNumber": "123456", //门锁编号
+        "logitude": 31.277132, 
+        "latitude": 121.514757, 
+        "floorheat": true, //是否有地暖
+        "inspectExponent": 40, //安检指数
+        "doorLock": false, //是否门锁
+        "inspectContent": {
+            "inspect": "20,10,20,20,20,20,20,10",//安检编号 
+            "reform": "811,31,12,81,88,85", //整改编号
+            "reformId": "1523456"//整改单编号
+        }
     }
+    ]
     ```
 
 * 返回内容：
