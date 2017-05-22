@@ -1,12 +1,13 @@
 # 服务端接口定义
 
-> 版本：v1.1
+> 版本：v1.2
 > 作者：李猛
 
 ## 修订记录
 
 1. v1.0, 2017-05-15, limeng, 初始版本。
 2. v1.1, 2017-05-18, zangwei, 修改上传文件接口、派工接口和消息推送接口。
+3. v1.2, 2017-05-22, zangwei, 修改下载工单数据接口、获取派工列表接口、上传多个文件接口和消息定义-新工单接口。
 
 ## 概述
 本文主要定义任务移动端接口定义规范。
@@ -232,6 +233,7 @@
             userNo: '用户编号', // string
             userName: '用户名称', // string
             userAddress: '用户地址/用气地址', // string
+            oldUserAddress: '旧用户地址', // string
             appointDate: '预约日期', // number, utc
             meterBarCode: '表条形码', // string
             meterEnergy: '表能量', // string
@@ -432,6 +434,7 @@
             userNo: '用户编号', // string
             userName: '用户名称', // string
             userAddress: '用户地址/用气地址', // string
+            oldUserAddress: '旧用户地址', // string
             appointDate: '预约日期', // number, utc
             meterBarCode: '表条形码', // string
             meterEnergy: '表能量', // string
@@ -605,10 +608,11 @@
 
 上传指定文件
 
-* URL: `v1/mobile/files/upload/{no}/{type}`
+* URL: `v1/mobile/files/upload/{no}/{isProject}/{type}`
 * METHOD: `POST`
 * 参数：
    * no: '工程编号或安检编号', // number  
+   * isProject: true, // bool, true: 工程编号, false: 安检编号
    * type: '照片类型', // number, 1: 现场环境, 2: 燃气表, 3: 燃气设备, 4: 装表位置, 4: 其它
 
 * 请求内容：
@@ -705,6 +709,7 @@
           userNo: '用户编号', // string
           userName: '用户名称', // string
           userAddress: '用户地址/用气地址', // string
+          oldUserAddress: '旧用户地址', // string
           appointDate: '预约日期', // number, utc
           meterBarCode: '表条形码', // string
           meterEnergy: '表能量', // string
