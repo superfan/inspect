@@ -209,13 +209,13 @@
           {
           isSuccess: 'true',
           message: '',
-          taskNo: '任务编号', // number
+          taskNo: '任务编号', // string
           extendInfo: 'json string' // 扩展信息, 可为空
           },
           {
           isSuccess: 'false',
           message: '失败原因',
-          taskNo: '任务编号', // number
+          taskNo: '任务编号', // string
           extendInfo: 'json string' // 扩展信息, 可为空
         },
           ....
