@@ -1,6 +1,6 @@
 # 服务端接口定义
 
-> 版本：v1.4
+> 版本：v1.5
 > 作者：李猛
 
 ## 修订记录
@@ -9,7 +9,8 @@
 2. v1.1, 2017-05-18, zangwei, 修改上传文件接口、派工接口和消息推送接口。
 3. v1.2, 2017-05-22, zangwei, 修改下载工单数据接口、获取派工列表接口、上传多个文件接口和消息定义-新工单接口。
 4. v1.3, 2017-05-03, limeng, 修改工单下载接口和工单处理接口。
-4. v1.4, 2017-09-06, limeng, 新增管理人员获取手下施工人员接口、新增、任务查询接口，重新定义一下获取用户信息接口的roles，用来判断是不是管理员。
+5. v1.4, 2017-09-06, limeng, 新增管理人员获取手下施工人员接口、新增、任务查询接口，重新定义一下获取用户信息接口的roles，用来判断是不是管理员。
+6. v1.5, 2017-09-13, limeng, 非居施工的施工人员字段类型由number改为string
 
 
 ## 概述
@@ -358,7 +359,7 @@
           projectNo: '工程编号', // string
 		  processTime: '踏勘时间/验收时间/维修时间/竣工时间', // number, utc
 		  processPerson: '踏勘人员/施工人员/验收人员/维修人员', // number
-		  processPerson2: '施工人员', // number
+		  processPerson2: '非居施工人员姓名', // string
 		  processResult: '踏勘结果/施工结果/验收结果/处理结果', // number
 		  constructInfo: '施工信息/验收信息(多个施工信息中间以@来串联)', // string
 		  lockedDoorNo: '门锁编号', // string
@@ -489,7 +490,7 @@
 				projectNo: '工程编号', // string
 				processTime: '踏勘时间/验收时间/维修时间/竣工时间', // number, utc
 				processPerson: '踏勘人员/施工人员/验收人员/维修人员', // number
-				processPerson2: '施工人员', // number
+				processPerson2: '非居施工人员姓名', // string
 				processResult: '踏勘结果/施工结果/验收结果/处理结果', // number
 				constructInfo: '施工信息/验收信息(多个施工信息中间以@来串联)', // string
 				lockedDoorNo: '门锁编号', // string
