@@ -82,7 +82,7 @@
 
 * 参数:
    * userId: '用户id', // number
-   * type: '业务类型', // number 1:电话维修
+   * type: '业务类型', // number 3:电话维修
 
 * 返回内容：
 
