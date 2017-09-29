@@ -168,7 +168,7 @@
       [
         {
           taskNo :'任务编号',  //string
-          taskState :'任务状态', //string  10:接受,20:派单,30:接单,40:到场,50:销单,-10:退单
+          taskState :'任务状态', //number  10:接受,20:派单,30:接单,40:到场,50:销单,-10:退单
           taskType :'任务类型',   	//number 3:电话检修  
           taskSubType :'任务子类型',	 //number 1:漏气维修 2：一般  
           handleResult :'处理结果',  //string
@@ -188,9 +188,9 @@
           Y: '纬度',     // number
           person:'操作人' //string
           opreateTime :'操作时间',//number utc 
-          handleType: '处理类别',
-          handleContent:'处理内容',
-          customerFeedback:'客户反馈'
+          handleType: '处理类别', //string
+          handleContent:'处理内容', //string 
+          customerFeedback:'客户反馈' //number
           meterEnergy: '表能量',   // number
           meterIndex: '表指数',        // number
         }
@@ -209,13 +209,13 @@
           {
           isSuccess: 'true',
           message: '',
-          taskNo: '任务编号', // string
+          taskNo :'任务编号',  //string
           extendInfo: 'json string' // 扩展信息, 可为空
           },
           {
           isSuccess: 'false',
           message: '失败原因',
-          taskNo: '任务编号', // string
+          taskNo :'任务编号',  //string
           extendInfo: 'json string' // 扩展信息, 可为空
         },
           ....
