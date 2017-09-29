@@ -9,6 +9,7 @@
 1. v1.0, 2017-09-25, zang, 初始版本。
 
 ## 概述
+
 本文主要定义任务移动端接口定义规范。
 
 
@@ -73,6 +74,7 @@
     ```
 
 ##册本信息获取
+
 * URL: `v1/mobile/volume/{account}`
 * METHOD: `GET`
 
@@ -114,6 +116,7 @@
    ```
 
 ##用户基本信息下载
+
 * URL: `v1/mobile/meter/list?account={account}`
 * METHOD: `GET`
 
@@ -194,6 +197,7 @@
      ```
 
 ##用户分组数据获取
+
 * URL: `v1/mobile/meter/groupList?account={account}`
 * METHOD: `GET`
 
@@ -223,6 +227,7 @@
    ```
 
 ##抄表数据上传
+
 * URL: `v1/mobile/meter/process?account={account}`
 * METHOD: `POST`
 
@@ -290,6 +295,7 @@
 
 
 ##停抄、补收 报修申请上传
+
 * URL: `v1/mobile/meter/?account={account}`
 * METHOD: `POST`
 
@@ -343,6 +349,7 @@
 
 
 ##用户分组上传
+
 * URL: `v1/mobile/meter/?account={account}`
 * METHOD: `POST`
 
@@ -394,6 +401,7 @@
 
 
 ##校正仪录入信息上传
+
 * URL: `v1/mobile/meter/correctorInput?account={account}`
 * METHOD: `POST`
 
@@ -453,6 +461,7 @@
 
 
 ##违章信息录入上传
+
 * URL: `v1/mobile/meter/illegal?account={account}`
 * METHOD: `POST`
 
@@ -503,6 +512,7 @@
 
 
 ##非正常计量输入信息上传
+
 * URL: `v1/mobile/meter/abnormalMeasure?account={account}`
 * METHOD: `POST`
 
@@ -552,6 +562,7 @@
 
 
 ##抄表分析上传
+
 * URL: `v1/mobile/meter/meterAlysis?account={account}`
 * METHOD: `POST`
 
@@ -612,6 +623,7 @@
     ```
 
 ##催款单数据上传
+
 * URL: `v1/mobile/meter/reminderUpload?account={account}`
 * METHOD: `POST`
 
