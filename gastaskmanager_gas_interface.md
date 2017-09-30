@@ -193,6 +193,7 @@
           customerFeedback:'客户反馈' //number
           meterEnergy: '表能量',   // number
           meterIndex: '表指数',        // number
+          sceneType :'现场类别' // number
         }
       ]
     }  
