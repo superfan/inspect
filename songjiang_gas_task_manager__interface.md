@@ -12,6 +12,7 @@
 5. v1.4, 2017-09-06, limeng, 新增管理人员获取手下施工人员接口、新增、任务查询接口，重新定义一下获取用户信息接口的roles，用来判断是不是管理员。
 6. v1.5, 2017-09-13, limeng, 非居施工的施工人员字段类型由number改为string
 7. v1.6, 2017-09-13, limeng, 照片类型新加客户签名，修改涉及查询工单数据和文件上传接口
+8. v1.7, 2017-10-11, limeng, 修改设备和材料
 
 
 ## 概述
@@ -386,7 +387,7 @@
 			  type: '材料类型', // number
 			  spec: '材料规格', // number
 			  count: '数量', // number
-			  unit: '单位', //number
+			  unit: '单位', //string
 			  name: '材料名称', // string
 			  manufacturer:'材料厂商' // string
 			},
@@ -395,9 +396,9 @@
 
 		  devices: [{ // 热水器及灶具信息, 没有则为null
 			  kind: '设备类型', // number, 1: 热水器, 2: 灶具
-			  brand: '品牌', // number
-			  type: '类型', // number
-			  spec: '规格', // number
+			  brand: '品牌', // string
+			  type: '类型', // string
+			  spec: '规格', // string
 			},
 			...
 		  ]
@@ -518,7 +519,7 @@
 					  type: '材料类型', // number
 					  spec: '材料规格', // number
 					  count: '数量', // number
-					  unit: '单位', //number
+					  unit: '单位', //string
 					  name: '材料名称', // string
 					  manufacturer:'材料厂商' // string
 					},
@@ -528,9 +529,9 @@
 				devices: [
 					{ // 热水器及灶具信息, 没有则为null
 					  kind: '设备类型', // number, 1: 热水器, 2: 灶具
-					  brand: '品牌', // number
-					  type: '类型', // number
-					  spec: '规格', // number
+					  brand: '品牌', // string
+					  type: '类型', // string
+					  spec: '规格', // string
 					},
 					...
 				]
