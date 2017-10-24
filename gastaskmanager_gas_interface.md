@@ -143,7 +143,12 @@
           X: '经度',     // number
           Y: '纬度',     // number
           dispatchTime :'派工时间',  //number utc时间
-          dispatchPersion:'派工人'  //string
+          dispatchPersion:'派工人',  //string
+          receiveTime:'接单时间', //long utc
+          arriveTime:'到场时间',//long utc
+          incomingTime:'来电时间',//long utc
+          office:'办事处',//string 
+          officeTelphone:'办事处电话'//string
          },
          ........
       ]
@@ -175,10 +180,7 @@
           handleRemark :'处理备注', //string
           handleProcess :'处理经过', //string
           liveSituation :'现场情况',//string
-          handlerTimely :'处理及时',//number 
-          eliminateTimely :'销件及时',//number 
           unfinishedReason :'未完成原因', //string
-          repeatMark :'重复标记',//number 
           emergencyRepair :'转急修',//number 
           needTransgerMeter :'需调表',//number 
           needSecutityCheck :'需安检',//number
@@ -194,6 +196,8 @@
           meterEnergy: '表能量',   // number
           meterIndex: '表指数',        // number
           sceneType :'现场类别' // number
+          refitting :'转改装',//number 
+          transtoPublic :'转公办',//number 
         }
       ]
     }  
@@ -212,12 +216,14 @@
           message: '',
           taskNo :'任务编号',  //string
           extendInfo: 'json string' // 扩展信息, 可为空
+          state :'任务状态', //number 30:接单,40:到场,50:销单
           },
           {
           isSuccess: 'false',
           message: '失败原因',
           taskNo :'任务编号',  //string
           extendInfo: 'json string' // 扩展信息, 可为空
+          state :'任务状态', //number  30:接单,40:到场,50:销单
         },
           ....
       ]
@@ -353,7 +359,6 @@
       type: '201', // number
       content: [ // 任务内容, array
         {
-        
           userNumber ：'用户编号' , //string
           taskNo:'任务编号',      //string
           taskState: '任务状态',   //number 10:接受,20:派单,30:接单,40:到场,50:销单,-10:退单
@@ -404,7 +409,12 @@
           X: '经度',     // number
           Y: '纬度',     // number
           dispatchTime :'派工时间',  //number utc时间
-          dispatchPersion:'派工人'  //string
+          dispatchPersion:'派工人', //string
+          receiveTime:'接单时间', //long utc
+          arriveTime:'到场时间',//long utc
+          incomingTime:'来电时间',//long utc
+          office:'办事处',//string 
+          officeTelphone:'办事处电话'//string
         },
         ...
         { ... },
