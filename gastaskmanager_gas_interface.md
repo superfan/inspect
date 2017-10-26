@@ -24,7 +24,8 @@
     {
       account: '登录账号',
       pwd: '密码',
-      appIdentify: 'com.sh3h.gastask' 
+      appIdentify: 'com.sh3h.gastask'，
+	  deviceId: '354360070074927'
     }
     ```
 
@@ -42,6 +43,31 @@
    }
    ```
 
+## 登出接口
+
+登出
+
+* URL: `v1/mobile/logout`
+* METHOD: `POST`
+
+* 请求内容:
+    ```
+    {
+      userId: 123, // number, 用户Id
+	  deviceId: '354360070074927' // string
+    }
+    ```
+
+* 回复内容：
+
+   ```
+   {
+      code: 0,
+      statusCode: 200,
+      message: '操作描述',
+      data: true, // bool, true: 成功，false：失败
+   }
+   ```
 
 ## 获取用户信息接口
 
@@ -72,6 +98,37 @@
       }
    }
    ```
+
+## 检查用户token是否有效
+
+检查用户token是否有效
+
+* URL: `v1/mobile/user/token/check`
+* METHOD: `POST`
+
+* 请求内容:
+    ```
+    {
+      userId: 123, // number, 用户Id
+	  deviceId: '354360070074927', // string
+      accessToken: 'token值' // string
+    }
+    ```
+
+* 回复内容：
+
+   ```
+   {
+      code: 0,
+      statusCode: 200,
+      message: '操作描述',
+      data: {
+        "tokenState": 1, // 1: accessToken有效; 2: accessToken更新; 3: 退出系统 
+        "accessToken": 'token值' // 有效的accessToken值
+      }
+   }
+   ```
+
 
 ## 下载工单数据
 
