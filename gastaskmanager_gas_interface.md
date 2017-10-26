@@ -201,9 +201,7 @@
           Y: '纬度',     // number
           dispatchTime :'派工时间',  //number utc时间
           dispatchPersion:'派工人',  //string
-          receiveTime:'接单时间', //long utc
           arriveTime:'到场时间',//long utc
-          incomingTime:'来电时间',//long utc
           office:'办事处',//string 
           officeTelphone:'办事处电话'//string
          },
@@ -467,9 +465,7 @@
           Y: '纬度',     // number
           dispatchTime :'派工时间',  //number utc时间
           dispatchPersion:'派工人', //string
-          receiveTime:'接单时间', //long utc
           arriveTime:'到场时间',//long utc
-          incomingTime:'来电时间',//long utc
           office:'办事处',//string 
           officeTelphone:'办事处电话'//string
         },
