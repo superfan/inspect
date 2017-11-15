@@ -7,6 +7,7 @@
 ## 修订记录
 
 1. v1.0, 2017-09-05, zang, 初始版本。
+2. v1.1，2017-11-14, 新增调表信息,改动工单下载接口,以及数据上传接口,获取用户信息接口。
 
 ## 概述
 本文主要定义任务移动端接口定义规范。
@@ -24,7 +25,7 @@
     {
       account: '登录账号',
       pwd: '密码',
-      appIdentify: 'com.sh3h.gastask'，
+      appIdentify: 'com.sh3h.gastask',
 	  deviceId: '354360070074927'
     }
     ```
@@ -95,6 +96,8 @@
          "mobile": "sample string 5", // string
          "tel": "sample string 6", // string
          "roles": "1, 2, 3, ...", // string
+         "team":'所属施工队',//string
+         "thirdParty":"第三方施工员",//number  0:否 1：是
       }
    }
    ```
@@ -139,7 +142,7 @@
 
 * 参数:
    * userId: '用户id', // number
-   * type: '业务类型', // number 3:电话维修
+   * type: '业务类型', // number 3:电话维修,1:调表
 
 * 返回内容：
 
@@ -151,14 +154,14 @@
       data: [
          {
           userNumber ：'用户编号' , //string
-          taskNo:'任务编号',   		//string
+          taskNo:'任务编号(调表编号)',   		//string
           taskState: '任务状态',   //number 10:接受,20:派单,30:接单,40:到场,50:销单,-10:退单
-          taskType: '任务类型',   	//number 3:电话检修  
+          taskType: '任务类型',   	//number 3:电话检修     1:调表
           taskSubType: '任务子类型',	 //number 1:漏气维修 2：一般  
-          cardNumber: '表号',   	//string
+          cardNumber: '表号(旧表表号)',   	//string
           areaName: '区名',   	 //string
           userLevel: '用户等级',	 //string
-          userName: '户名', 	 //string
+          userName: '户名(用户名称)', 	 //string
           address: '地址', 		 //string
           telephone: '电话',  	//string
           mobilePhone: '手机',  	//string
@@ -166,13 +169,13 @@
           responseCategory: '反映类别', 	//string
           responseContent: '反映内容', 	//string
           reflectionForm: '反映形式', 	//string
-          reactionTime: '反映时间',  	// number, utc
+          reactionTime: '反映时间(申请日期)',  	// number, utc
           roadType: '道路类型',		//string
           gasNature: '用气性质',		//string
           infoSources: '信息来源',		//string
           urgency: '紧急程度',		//string
           acceptTime: '接受时间',		// number, utc
-          meterEnergy: '表能量',		// number
+          meterEnergy: '表能量(旧表能量)',		// number
           meterIndex: '表指数',				// number
           appointementStart: '预约开始',		//string
           appointementLength: '预约时长',		//string
@@ -188,12 +191,12 @@
           dispatchExtend: '派单备注', 	//string  
           hangUp: '是否挂起', 	 // number 0:不挂 , 1:挂起
           reflectRemarks: '反映备注', //string
-          meterModel: '型号',   //string
-          meterManufactor: '厂家', 	 //string
+          meterModel: '型号(旧表型号)',   //string
+          meterManufactor: '厂家(旧表厂商)', 	 //string
           calibratorSupplier: '校正仪供应商',  	//string
           calibratorModel: '校正仪型号', 	 //string
           processLevel: '处理级别', 	 //string
-          infoNumber: '信息单号', 		 //string
+          infoNumber: '信息单号(PDA编号)', 		 //string
           serialNumber: '流水号', 		 //string
           receptionPerson: '受理人',	//string
           userNumber:'用户编号',  //string
@@ -203,7 +206,17 @@
           dispatchPersion:'派工人',  //string
           arriveTime:'到场时间',//long utc
           office:'办事处',//string 
-          officeTelphone:'办事处电话'//string
+          officeTelphone:'办事处电话',//string
+          processTime: '剩余处理时间',//number
+          lastOperateTime:'最近一次调表日期',number utc ------调表新加字段
+          replaceReason:'换表原因',//string 
+          spareNo:'备用表号',//string
+		  diffValue:'差值',//string
+		  caliber: '口径',//string
+		  meterRead:'旧表抄码',//number
+          installTime:'安装日期',//number utc 
+          hangUpValue:'倒挂气量',//number
+          AlarmValue:'报警气量'//number 
          },
          ........
       ]
@@ -229,30 +242,45 @@
         {
           taskNo :'任务编号',  //string
           taskState :'任务状态', //number  10:接受,20:派单,30:接单,40:到场,50:销单,-10:退单
-          taskType :'任务类型',   	//number 3:电话检修  
+          taskType :'任务类型',   	//number 3:电话检修  1:调表
           taskSubType :'任务子类型',	 //number 1:漏气维修 2：一般  
-          handleResult :'处理结果',  //string
-          handleRemark :'处理备注', //string
+          handleResult :'处理结果(施工结果)',  //string
+          handleRemark :'处理备注(退单备注)', //string
           handleProcess :'处理经过', //string
           liveSituation :'现场情况',//string
           unfinishedReason :'未完成原因', //string
-          emergencyRepair :'转急修',//number 
+          emergencyRepair :'转急中',//number 
           needTransgerMeter :'需调表',//number 
           needSecutityCheck :'需安检',//number
           isLock : '是否门锁' //number,
           lockNumber: '门锁编号' //string  
           X: '经度',     // number
           Y: '纬度',     // number
-          person:'操作人' //string
-          opreateTime :'操作时间',//number utc 
+          person:'操作人(施工人员)' //string
+          opreateTime :'操作时间(施工日期)',//number utc 
           handleType: '处理类别', //string
           handleContent:'处理内容', //string 
           customerFeedback:'客户反馈' //number
-          meterEnergy: '表能量',   // number
-          meterIndex: '表指数',        // number
+          meterEnergy: '表能量(新表能量)',   // number
+          meterIndex: '表指数(拆表指数)',        // number
           sceneType :'现场类别' // number
           refitting :'转改装',//number 
-          transtoPublic :'转公办',//number 
+          transtoPublic :'转它办',//number   
+          replaceResult:'调表结果',//string  --------调表新加字段
+          theftGas:'防窃气装置',//number  1:是，0：否
+          inspectPerson:'验收人员',//string
+          alwaysOpen:'调总开',//string
+          oldMeterNo:'旧表表号',//string
+          newMeterNo:'新表表号',//string
+          newMeterBackNo:'新表备用表号',//string
+          deviceNo:'设备号',//string
+          meterModel: '型号',   //string
+		  caliber: '口径',//string
+          meterManufactor: '厂商', 	 //string
+		  airDirection:'进气方向',//string
+		  surplusMoney:'剩余金额',//string
+		  surpluAmount:'剩余用量',//string
+		  oldMeterIndex:'旧表指数' //number
         }
       ]
     }  
@@ -284,6 +312,78 @@
       ]
      }
     ```
+
+
+## 申请挂起  
+ 
+ 调表申请挂起
+
+* URL: `v1/mobile/tasks/apply?userId={userId}`
+* METHOD: `POST`
+
+* 参数:
+   * userId: 用户id
+
+* 请求内容:
+
+    ```
+    {
+          taskNo :'任务编号',  //string
+          taskType :'任务类型',   	//number 3:电话检修  1:调表
+          taskSubType :'任务子类型',	 //number 1:漏气维修 2：一般  
+          hangUp: '是否挂起', 	 // number 0:不挂 , 1:挂起
+     }  
+    ```
+
+* 返回内容：
+
+    ```
+    {
+      code: 0,
+      statusCode: 200,
+      message: '操作描述',
+      data: 
+          {
+          isSuccess: 'true',
+          message: '',
+          taskNo :'任务编号',  //string
+          extendInfo: 'json string' // 扩展信息, 可为空
+          }
+     }
+    ```
+
+
+
+## 工单挂起查询
+
+根据条件查询工单是否挂起
+
+* URL: `v1/mobile/task/query?userId={userId}&taskNo={taskNo}`
+* METHOD: `GET`
+
+* 参数:
+   * userId: '用户id', // number
+   * taskNo:'任务编号(调表编号)',//string
+
+* 返回内容：
+
+    ```
+    {
+      code: 0,
+      statusCode: 200,
+      message: '操作描述',
+      data: [
+         {
+          taskNo :'任务编号',  //string
+          taskState :'任务状态', //number  10:接受,20:派单,30:接单,40:到场,50:销单,-10:退单
+          taskType :'任务类型',   	//number 3:电话检修  1:调表
+          taskSubType :'任务子类型',	 //number 1:漏气维修 2：一般  
+          hangUp: '是否挂起', 	 // number 0:不挂 , 1:挂起
+         },
+         ........
+      ]
+    }
+   ```
 
 
 ## 上传多个文件
@@ -414,60 +514,70 @@
       type: '201', // number
       content: [ // 任务内容, array
         {
-          userNumber ：'用户编号' , //string
-          taskNo:'任务编号',      //string
+           userNumber ：'用户编号' , //string
+          taskNo:'任务编号(调表编号)',   		//string
           taskState: '任务状态',   //number 10:接受,20:派单,30:接单,40:到场,50:销单,-10:退单
-          taskType: '任务类型',     //number 3:电话检修  
-          taskSubType: '任务子类型',  //number 1:漏气维修 2：一般  
-          cardNumber: '表号',     //string
-          areaName: '区名',      //string
-          userLevel: '用户等级',   //string
-          userName: '户名',    //string
-          address: '地址',     //string
-          telephone: '电话',    //string
-          mobilePhone: '手机',    //string
-          reflectPeople: '反映人',   //string
-          responseCategory: '反映类别',   //string
-          responseContent: '反映内容',  //string
-          reflectionForm: '反映形式',   //string
-          reactionTime: '反映时间',   // number, utc
-          roadType: '道路类型',   //string
-          gasNature: '用气性质',    //string
-          infoSources: '信息来源',    //string
-          urgency: '紧急程度',    //string
-          acceptTime: '接受时间',   // number, utc
-          meterEnergy: '表能量',   // number
-          meterIndex: '表指数',        // number
-          appointementStart: '预约开始',    //string
-          appointementLength: '预约时长',   //string
-          appointementEnd: '预约结束',   //string
-          repeat: '重复',       // number 0:不重复 1：重复 
-          barCode: '表条码',    //string
-          correctorBarCode: '校正仪条码',    //string
-          settlementTmp: '结算温度',     // number
-          settlementPressure: '结算压力',     //string
-          supplyPressure: '供气压力',    //string
-          pulseEquivalent: '脉冲当量',    //string
-          urgent: '加急',       // number 0：不加急,1:加急  
-          dispatchExtend: '派单备注',   //string  
-          hangUp: '是否挂起',    // number 0:不挂 , 1:挂起
+          taskType: '任务类型',   	//number 3:电话检修     1:调表
+          taskSubType: '任务子类型',	 //number 1:漏气维修 2：一般  
+          cardNumber: '表号(旧表表号)',   	//string
+          areaName: '区名',   	 //string
+          userLevel: '用户等级',	 //string
+          userName: '户名(用户名称)', 	 //string
+          address: '地址', 		 //string
+          telephone: '电话',  	//string
+          mobilePhone: '手机',  	//string
+          reflectPeople: '反映人',  	//string
+          responseCategory: '反映类别', 	//string
+          responseContent: '反映内容', 	//string
+          reflectionForm: '反映形式', 	//string
+          reactionTime: '反映时间(申请日期)',  	// number, utc
+          roadType: '道路类型',		//string
+          gasNature: '用气性质',		//string
+          infoSources: '信息来源',		//string
+          urgency: '紧急程度',		//string
+          acceptTime: '接受时间',		// number, utc
+          meterEnergy: '表能量(旧表能量)',		// number
+          meterIndex: '表指数',				// number
+          appointementStart: '预约开始',		//string
+          appointementLength: '预约时长',		//string
+          appointementEnd: '预约结束',	 //string
+          repeat: '重复',   		// number 0:不重复 1：重复 
+          barCode: '表条码',		 //string
+          correctorBarCode: '校正仪条码',		//string
+          settlementTmp: '结算温度',		 // number
+          settlementPressure: '结算压力', 		//string
+          supplyPressure: '供气压力',		 //string
+          pulseEquivalent: '脉冲当量', 		//string
+          urgent: '加急', 			// number 0：不加急,1:加急  
+          dispatchExtend: '派单备注', 	//string  
+          hangUp: '是否挂起', 	 // number 0:不挂 , 1:挂起
           reflectRemarks: '反映备注', //string
-          meterModel: '型号',   //string
-          meterManufactor: '厂家',   //string
-          calibratorSupplier: '校正仪供应商',   //string
-          calibratorModel: '校正仪型号',    //string
-          processLevel: '处理级别',    //string
-          infoNumber: '信息单号',      //string
-          serialNumber: '流水号',     //string
-          receptionPerson: '受理人', //string
-          user_number:'用户编号',  //string
+          meterModel: '型号(旧表型号)',   //string
+          meterManufactor: '厂家(旧表厂商)', 	 //string
+          calibratorSupplier: '校正仪供应商',  	//string
+          calibratorModel: '校正仪型号', 	 //string
+          processLevel: '处理级别', 	 //string
+          infoNumber: '信息单号(PDA编号)', 		 //string
+          serialNumber: '流水号', 		 //string
+          receptionPerson: '受理人',	//string
+          userNumber:'用户编号',  //string
           X: '经度',     // number
           Y: '纬度',     // number
           dispatchTime :'派工时间',  //number utc时间
-          dispatchPersion:'派工人', //string
+          dispatchPersion:'派工人',  //string
           arriveTime:'到场时间',//long utc
           office:'办事处',//string 
-          officeTelphone:'办事处电话'//string
+          officeTelphone:'办事处电话',//string
+          processTime: '剩余处理时间',//number
+          lastOperateTime:'最近一次调表日期',number utc ------调表新加字段
+          replaceReason:'换表原因',//string 
+          spareNo:'备用表号',//string
+		  diffValue:'差值',//string
+		  caliber: '口径',//string
+		  meterRead:'旧表抄码',//number
+          installTime:'安装日期',//number utc 
+          hangUpValue:'倒挂气量',//number
+          AlarmValue:'报警气量'//number 
         },
         ...
         { ... },
