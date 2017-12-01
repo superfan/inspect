@@ -1,12 +1,13 @@
 # 服务端接口定义
 
-> 版本：v1.0
+> 版本：v1.1
 > 作者：zang
 
 
 ## 修订记录
 
 1. v1.0, 2017-09-25, zang, 初始版本。
+2. v1.1, 2017-12-01, zang, 调整接口。
 
 ## 概述
 
@@ -166,7 +167,7 @@
               indicationError  : '示值误差', // number
               generFailureMaintenance  : '一般失效补收', // number
               compensationMode  : '补偿方式0：不收补偿费；1：固定值每月；2：表能量乘补偿费系数', // number
-              gasSource  : '气源1：人工煤气；2：天然气', // number
+              gasSourceValue  : '气源1：人工煤气；2：天然气', // number
               shuntSerialNumber  : '并联序号', // number
               abMeasureSupplement  : '非正常计量补收量', // number
               lastWork  : '最后工次', // number
@@ -263,6 +264,7 @@
           rotate  : '是否轮转0：否；1：是', // number
           blueReadRecord  : '直读记录', // number
           recoveryMeter  : '恢复抄表 ', // number (1:临时、2：正常 )
+          userNo  : '领用编号', // number 
         }
       ]
     }  
@@ -317,6 +319,7 @@
           chargeAginAmount: '补收量' ,//number 词语值
           chargeAginType: '补收类型' ,//number 词语值
           opreateTime: '处理时间' ,//long utc
+          userNo  : '领用编号', // number
         }
       ]
     }  
@@ -369,6 +372,7 @@
             groupID     : '组号', //string 唯一
             address     : '位置', //string
             totalNumber : '数量', //number
+            userNo  : '领用编号', // number
         }
       ]
     }  
@@ -429,6 +433,7 @@
           refuelingDate  : '加油日期', // long utc 
           dischargeDate  : '放水日期', // long utc 
           remarks: '备注' ,//string
+          userNo  : '领用编号', // number
         }
       ]
     }  
@@ -480,6 +485,7 @@
           issueDate: '发单日期' ,//string
           hairSole  : '发单人', // long utc 
           remarks: '备注' ,//string
+          userNo  : '领用编号', // number
         }
       ]
     }  
@@ -530,6 +536,7 @@
           gasUtilization: '用气情况,用气情况编码以逗号分隔，例如：1,2,3' ,//string
           opreateTime: '操作时间' ,//long utc 
           remarks: '备注' ,//string
+          userNo  : '领用编号', // number
         }
       ]
     }  
@@ -592,6 +599,7 @@
           twoLevelReason: '二级原因' ,//number
           remarks: '备注' ,//string
           alysisDate: '分析日期' ,//long utc 
+          userNo  : '领用编号', // number
         }
       ]
     }  
@@ -641,6 +649,7 @@
           confirmTime: '确认时间' ,//long utc 
           x: '经度' ,//number
           y: '纬度' ,//number
+          userNo  : '领用编号', // number
         }
       ]
     }  
@@ -692,7 +701,7 @@
       data: [
          {
           violationNo :'违章情况编码',  //string
-          violationContent :'违章情况描述',  //number
+          violationContent :'违章情况描述',  //string
           extend  :'扩展字段' //string
          },
          .......
@@ -715,7 +724,7 @@
       data: [
          {
           gasUtiName :'参数名称',  //string
-          gasUtiValue :'参数值',  //number
+          gasUtiValue :'参数值',  //string
           gasUtiNO :'参数编号',  //number
           extend  :'扩展字段' //string
          },
@@ -863,6 +872,7 @@
             fileName: '文件名',
             fileHash: '文件hash',
             pictureType : 拍照对象类型 抄表数据:154,校正仪输入:157,量高量低分析:155,非正常计量输入:156,违章信息:158
+            userNo  : '领用编号', // number
           }
           ....
        ]
@@ -883,11 +893,11 @@
 
 ## 获取用气历史信息
 
-* URL: `v1/mobile/meter/history?userNumber={userNumber}`
+* URL: `v1/mobile/meter/historyByAccount?account={account}`
 * METHOD: `GET`
 
 * 参数:
-    * userNumber: 用户编号
+    * account: 领用人账号
 
 * 返回内容：
 
@@ -1061,9 +1071,9 @@
           userNumber :'用户编号',  //string
           alarmNumber :'报警器编号',  //string
           yearlyinspecDate :'年检日期',  //long utc
-          userNumber :'年检单位',  //string
-          alarmNumber :'年检结果',  //string
-          alarmNumber :'年检到期日',  //long utc
+          nianjiandw :'年检单位',  //string
+          nianjianjg :'年检结果',  //string
+          nianjiandqrq :'年检到期日',  //long utc
           extend  :'扩展字段' //string
          },
          .......
@@ -1094,7 +1104,7 @@
           contractMaturityDate :'合同到期日期',  //long utc
           maintenanceUnit :'保养单位',  //string
           dispatchType :'派工类型',  //string
-          dispatchPerson :'发放人',  //long utc
+          dispatchPerson :'发放人',  //string
           extend  :'扩展字段' //string
          },
          .......
@@ -1105,7 +1115,7 @@
 
 ## 获取报警系统派工明细
 
-* URL: `v1/mobile/meter/maintainInfo?userNumber={userNumber}`
+* URL: `v1/mobile/meter/maintainInfopgmx?userNumber={userNumber}`
 * METHOD: `GET`
 
 * 参数:
@@ -1125,7 +1135,7 @@
           dispatchTime :'派工时间',  //long utc
           dispatchContent :'派工内容',  //string
           dispatchPerson :'发放人',  //long utc 
-          dispatchTime :'发放日期',  //long utc 
+          grantDate :'发放日期',  //long utc 
           extend  :'扩展字段' //string
          },
          .......
