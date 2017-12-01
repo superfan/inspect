@@ -98,7 +98,7 @@
               readDate  : '本次抄表日期', //long  utc
               nextReadDate  : '本次抄表日期', //long  utc
               workTime  : '工次', // number 
-              userNo  : '领用编号', // number 
+              userNo  : '领用编号', // string 
               accountYear  : '账务年月', // number 
               receiptDate  : '领用日期', //long  utc
               meterReadSchedule  : '抄表日程', //long  utc
@@ -264,7 +264,7 @@
           rotate  : '是否轮转0：否；1：是', // number
           blueReadRecord  : '直读记录', // number
           recoveryMeter  : '恢复抄表 ', // number (1:临时、2：正常 )
-          userNo  : '领用编号', // number 
+          userNo  : '领用编号', // string 
         }
       ]
     }  
@@ -319,7 +319,7 @@
           chargeAginAmount: '补收量' ,//number 词语值
           chargeAginType: '补收类型' ,//number 词语值
           opreateTime: '处理时间' ,//long utc
-          userNo  : '领用编号', // number
+          userNo  : '领用编号', // string
         }
       ]
     }  
@@ -372,7 +372,7 @@
             groupID     : '组号', //string 唯一
             address     : '位置', //string
             totalNumber : '数量', //number
-            userNo  : '领用编号', // number
+            userNo  : '领用编号', // string
         }
       ]
     }  
@@ -433,7 +433,7 @@
           refuelingDate  : '加油日期', // long utc 
           dischargeDate  : '放水日期', // long utc 
           remarks: '备注' ,//string
-          userNo  : '领用编号', // number
+          userNo  : '领用编号', // string
         }
       ]
     }  
@@ -485,7 +485,7 @@
           issueDate: '发单日期' ,//string
           hairSole  : '发单人', // long utc 
           remarks: '备注' ,//string
-          userNo  : '领用编号', // number
+          userNo  : '领用编号', // string
         }
       ]
     }  
@@ -536,7 +536,7 @@
           gasUtilization: '用气情况,用气情况编码以逗号分隔，例如：1,2,3' ,//string
           opreateTime: '操作时间' ,//long utc 
           remarks: '备注' ,//string
-          userNo  : '领用编号', // number
+          userNo  : '领用编号', // string
         }
       ]
     }  
@@ -599,7 +599,7 @@
           twoLevelReason: '二级原因' ,//number
           remarks: '备注' ,//string
           alysisDate: '分析日期' ,//long utc 
-          userNo  : '领用编号', // number
+          userNo  : '领用编号', // string
         }
       ]
     }  
@@ -649,7 +649,7 @@
           confirmTime: '确认时间' ,//long utc 
           x: '经度' ,//number
           y: '纬度' ,//number
-          userNo  : '领用编号', // number
+          userNo  : '领用编号', // string
         }
       ]
     }  
@@ -872,7 +872,7 @@
             fileName: '文件名',
             fileHash: '文件hash',
             pictureType : 拍照对象类型 抄表数据:154,校正仪输入:157,量高量低分析:155,非正常计量输入:156,违章信息:158
-            userNo  : '领用编号', // number
+            userNo  : '领用编号', // string
           }
           ....
        ]
