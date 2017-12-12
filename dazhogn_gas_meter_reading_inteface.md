@@ -8,6 +8,7 @@
 
 1. v1.0, 2017-09-25, zang, 初始版本。
 2. v1.1, 2017-12-01, zang, 调整接口。
+3. v1.2, 2017-12-12, 下载上传接口新加字段。
 
 ## 概述
 
@@ -190,6 +191,16 @@
               needPictures  : '是否需要拍照，1：需要；0：不需要', // number
               meterMethod     : '抄表方式 5：IC, 8：无线直读 9：自抄 10：停用', //string
               groupId  : '组号', // string
+              newSecret:'新密钥',//string
+              oldsecret:'旧密钥',//string
+              dataResource:'数据来源',//string
+              dataResourceValue:'采集数据',//number
+              dataResourceTime:'采集数据时间',//long
+              publicWelfare:'公益性用户 ,1：是,0：否',//number
+              lastMeterRemark:'上次抄表备注',//string
+              selfReport:'微客服自报',//number 
+              cumulants:'年累积量',//number 
+              bluetoothDevice:'蓝牙设备',//String
               extend  :'扩展字段' //string
           },
          ........
@@ -265,6 +276,10 @@
           blueReadRecord  : '直读记录', // number
           recoveryMeter  : '恢复抄表 ', // number (1:临时、2：正常 )
           userNo  : '领用编号', // string 
+          meterState:'表的状态',//number 
+          setSecreteFlag:'密钥修改标志 (1:修改成功)',//number 
+          saveNewSecrete: '新密钥', // string 
+          saveOldSecrete: '旧密钥', // string 
         }
       ]
     }  
