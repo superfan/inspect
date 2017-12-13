@@ -255,7 +255,6 @@
       message: '操作描述',
       data: [
          {
-            account     : '领用人账号', //string 
             id     : '序号', //number  
             userNumber: '用户编号' ,//string
             remark : '备注', //string
