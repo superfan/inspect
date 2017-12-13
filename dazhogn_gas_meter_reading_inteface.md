@@ -238,6 +238,37 @@
     }
    ```
 
+## 获取抄表备注
+
+* URL: `v1/mobile/meter/remarks?account={account}`
+* METHOD: `GET`
+
+* 参数:
+    * account : 登录账号  //string 
+
+* 返回内容：
+
+    ```
+    {
+      code: 0,
+      statusCode: 200,
+      message: '操作描述',
+      data: [
+         {
+            account     : '领用人账号', //string 
+            id     : '序号', //number  
+            userNumber: '用户编号' ,//string
+            remark : '备注', //string
+            remarkFlag     : '备注类别', //number 0:短期备注 1:长期备注
+            operater : '操作人', //string
+            operateTime  :'操作时间' //long utc 
+         }
+       ]
+    }
+   ```
+
+
+
 ## 抄表数据上传
 
 * URL: `v1/mobile/meter/process?account={account}`
