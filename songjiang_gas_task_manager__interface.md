@@ -1,6 +1,6 @@
 # 服务端接口定义
 
-> 版本：v1.5
+> 版本：v1.8
 > 作者：李猛
 
 ## 修订记录
@@ -13,6 +13,7 @@
 6. v1.5, 2017-09-13, limeng, 非居施工的施工人员字段类型由number改为string
 7. v1.6, 2017-09-13, limeng, 照片类型新加客户签名，修改涉及查询工单数据和文件上传接口
 8. v1.7, 2017-10-11, limeng, 修改设备和材料
+9. v1.8, 2017-12-26, limeng, 工单处理接口新增错误码，apk更新接口新增次版本号
 
 
 ## 概述
@@ -188,11 +189,12 @@
 
 检查app是否可以更新
 
-* URL: `v1/mobile/update/app/check?version={version}`
+* URL: `v1/mobile/update/app/check?version={version}&subVersion={subVersion}`
 * METHOD: `GET`
 
 * 参数:
    * version: 1, // number, 版本号
+   * subVersion: 2, // number, 次版本号
 
 * 返回内容：
 
@@ -203,6 +205,7 @@
       message: '操作描述',
       data: {
         version: 2, // number
+        subVersion: 2, // number
         url：'http://example.com/publish/app/app_id_app_v12.zip' //string
       }
     }
@@ -418,12 +421,14 @@
       data: [
         {
           isSuccess: 'true',
+		  errorCode: 1, //number 0(正常错误、手机正常上传)，1(数据已上传、手机不再上传)，2(未知错误，手机不再上传)
           message: '',
           projectNo: '工程编号', // number
           extendInfo: 'json string' // 扩展信息, 可为空
         },
         {
           isSuccess: 'false',
+		  errorCode: 1,
           message: '失败原因',
           projectNo: '工程编号', // number
           extendInfo: 'json string' // 扩展信息, 可为空
