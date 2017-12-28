@@ -9,6 +9,7 @@
 1. v1.0, 2017-09-25, zang, 初始版本。
 2. v1.1, 2017-12-01, zang, 调整接口。
 3. v1.2, 2017-12-12, 下载上传接口新加字段。
+4. v1.3, 2017-12-27, 新加获取校正仪录入信息,修改用气历史信息下载接口
 
 ## 概述
 
@@ -967,11 +968,13 @@
 
 ## 获取用气历史信息
 
-* URL: `v1/mobile/meter/history?account={account}`
+根据用户编号获取用气历史信息
+
+* URL: `v1/mobile/meter/history?userNumber={userNumber}`
 * METHOD: `GET`
 
 * 参数:
-    *  account:'领用人账号' //string
+    *  userNumber:'用户编号' //string
 
 * 返回内容：
 
@@ -1288,6 +1291,43 @@
           newMeterCode:'新表底数',  //string
           newModel :'新表型号',  //string
           extend  :'扩展字段' //string
+         },
+         .......
+      ]
+    }
+    ```
+
+## 获取校正仪录入信息
+
+* URL: `v1/mobile/meter/corrector/list?account={account}`
+* METHOD: `GET`
+
+* 参数:
+    * account: '领用人账号',//string
+
+* 返回内容：
+
+    ```
+    {
+      code: 0,
+      statusCode: 200,
+      message: '操作描述',
+      data: [
+         {
+          userNumber: '用户编号' ,//string
+          meterRead  : '表头读数', // number
+          preCorrectFlow: '校正前流量' ,//number
+          correctedFlow  : '校正后流量', // number
+          WorkingPressure  : '工作压力', // number
+          workingTemp  : '工作温度', // number
+          zValue  : 'Z值', // number
+          batteryLife  : '电池寿命', // number
+          faultFlow  : '故障流量', // number
+          instantTraffic  : '即时流量', // number
+          measuredPressure  : '实测压力', // number
+          refuelingDate  : '加油日期', // long utc 
+          dischargeDate  : '放水日期', // long utc 
+          remarks: '备注' ,//string
          },
          .......
       ]
