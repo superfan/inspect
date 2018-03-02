@@ -320,6 +320,59 @@
     ```
 
 
+## 电话检修单申请调表
+ 
+电话检修单申请调表
+
+
+* URL: `v1/mobile/tasks/applayReplace?userId={userId}`
+* METHOD: `POST`
+
+* 参数:
+   * userId: 用户id
+
+* 请求内容:
+
+    ```
+    {
+      [
+        {
+          taskNo :'任务编号',  //string
+          person:'操作人(施工人员)' //string
+          reason:'原因'//string
+        }
+      ]
+    }  
+    ```
+
+* 返回内容：
+
+    ```
+    {
+      code: 0,
+      statusCode: 200,
+      message: '操作描述',
+      data: [
+          {
+          isSuccess: 'true',
+          message: '',
+          taskNo :'任务编号',  //string
+          extendInfo: 'json string' // 扩展信息, 可为空
+          },
+          {
+          isSuccess: 'false',
+          message: '失败原因',
+          taskNo :'任务编号',  //string
+          extendInfo: 'json string' // 扩展信息, 可为空        },
+          ....
+      ]
+     }
+    ```
+
+
+
+
+
 ## 申请挂起  
  
  调表申请挂起
@@ -1465,9 +1518,9 @@
       [
         {
           adjustNumber :'调表编号',  //string
-          gasMeterBarCode: '燃气表条码',//string 
+          //gasMeterBarCode: '燃气表条码',//string 
           workId : '施工人员id',//number （施工人员信息通过词语接口下载）
-          workName: '施工人员',//string
+          //workName: '施工人员',//string
           remark:'队长退单确认备注',//string
         }
       ]
@@ -1494,6 +1547,137 @@
           adjustNumber :'调表编号',  //string
           extendInfo: 'json string' // 扩展信息, 可为空
           },
+          ....
+      ]
+     }
+    ```
+
+## 获取队长退表信息接口
+
+根据条件获取退表数据
+
+* URL: `v1/mobile/leader/back/meter/list?userId={userId}&workId={workId}&dispatchData={dispatchData}`
+* METHOD: `GET`
+
+* 参数:
+   * userId: '队长id', // number
+   * workId: '施工人员id', // number 
+   * dispatchData: '派单日期', // number  
+
+* 返回内容：
+
+    ```
+    {
+      code: 0,
+      statusCode: 200,
+      message: '操作描述',
+      data: [
+         {
+         "gasMeterBarCode": "燃气表条码", // string     
+         "meterEnergy": "表能量", // number
+         "meterType":  "表型号" //  string
+		 "meterState": "状态", // number  
+         "remark": "备注", // string
+         },
+         ........
+      ]
+    }
+
+## 队长退表确认信息回填
+
+退表信息回填
+
+* URL: `v1/mobile/leader/meter/back?userId={userId}`
+* METHOD: `POST`
+
+* 参数:
+   * userId: 施工队长id
+
+* 请求内容:
+
+    ```
+    {
+      [
+        {
+          gasMeterBarCode: "燃气表条码", // string     
+          workId : '施工人员id',//number （施工人员信息通过词语接口下载）
+          remark:'队长退单确认备注',//string
+        }
+      ]
+    }  
+    ```
+
+* 返回内容：
+
+    ```
+    {
+      code: 0,
+      statusCode: 200,
+      message: '操作描述',
+      data: [
+          {
+          isSuccess: 'true',
+          message: '',
+          gasMeterBarCode: "燃气表条码", // string     
+          extendInfo: 'json string' // 扩展信息, 可为空
+          },
+          {
+          isSuccess: 'false',
+          message: '失败原因',
+          gasMeterBarCode: "燃气表条码", // string     
+          extendInfo: 'json string' // 扩展信息, 可为空
+          },
+          ....
+      ]
+     }
+    ```
+
+
+## 非正常计量输入信息上传
+
+* URL: `v1/mobile/meter/abnormalMeasure?userId={userId}`
+* METHOD: `POST`
+
+* 参数:
+  userId: 用户id
+
+
+* 请求内容:
+
+    ```
+    {
+      [
+        {
+          userNumber: '用户编号' ,//string
+          meterNo :'表号',  //string
+          gasUtilization: '用气情况,用气情况编码以逗号分隔，例如：1,2,3' ,//string
+          opreateTime: '操作时间' ,//long utc 
+          remarks: '备注' ,//string
+        }
+      ]
+    }  
+    ```
+
+* 返回内容：
+
+    ```
+    {
+      code: 0,
+      statusCode: 200,
+      message: '操作描述',
+      data: [
+          {
+          isSuccess: 'true',
+          message: '',
+          userNumber :'用户编号',  //string
+          extendInfo: 'json string' // 扩展信息, 可为空
+          },
+          {
+          isSuccess: 'false',
+          message: '失败原因',
+          userNumber :'用户编号',  //string
+          extendInfo: 'json string' // 扩展信息, 可为空
+        },
           ....
       ]
      }
