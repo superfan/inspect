@@ -10,6 +10,7 @@
 2. v1.1, 2017-12-01, zang, 调整接口。
 3. v1.2, 2017-12-12, 下载上传接口新加字段。
 4. v1.3, 2017-12-27, 新加获取校正仪录入信息,修改用气历史信息下载接口
+5. v1.4, 2018-1-22,用户基本信息，抄表数据上传接口新加字段
 
 ## 概述
 
@@ -190,7 +191,7 @@
               roundRobin  : '轮转', // number
               illegal  : '违章，1：有违章', // number
               needPictures  : '是否需要拍照，1：需要；0：不需要', // number
-              meterMethod     : '抄表方式 5：IC, 8：无线直读 9：自抄 10：停用', //string
+              meterMethod     : '抄表方式 5：IC, 8：1.0 无线直读,10：2.0无线蓝牙抄表,20：自抄,30:停用' , //string
               groupId  : '组号', // string
               newSecret:'新密钥',//string
               oldsecret:'旧密钥',//string
@@ -203,7 +204,51 @@
               cumulants:'年累积量',//number 
               bluetoothDevice:'蓝牙设备',//String
               extend  :'扩展字段' //string
-          },
+              correctorName:'校正仪号', //string 为空则不需要校正仪录入 
+              stopSource:'停抄来源',//string 
+              stopType:'停抄类型',//string
+              },
+         ........
+      ]
+    }
+     ```
+
+## 抄表分析下载
+* URL: `v1/mobile/meterAlysis/list?account={account}`
+* METHOD: `GET`
+
+* 参数:
+    * account : 登录账号  //string 
+
+
+* 返回内容：
+
+    ```
+    {
+      code: 0,
+      statusCode: 200,
+      message: '操作描述',
+      data: [
+         {
+            st     : '站点', //string 
+            ch     : '册本号', //string
+            userNumber: '用户编号' ,//string 
+           	volumeNo: '册本号' ,//string
+          	alysisYearAndMonth: '分析年月' ,//number
+          	alysisType: '分析类型' ,//number
+          	meterSecond: '抄次' ,//number
+          	analysisRatio: '分析比率' ,//number
+          	shangyueryl: '上月日用量/去年同期日用量' ,//number
+          	lastReadCycle: '上月抄表周期/去年抄表周期' ,//number
+          	dailyUseOfthis: '本月日用量' ,//number
+         	meterCycleofthis: '本月抄表周期' ,//number
+         	lastMeterDate: '上次抄表日期' ,//long utc 
+          	ratio: '比率' ,//number
+         	oneLevelReason: '一级原因' ,//number
+         	twoLevelReason: '二级原因' ,//number
+         	remarks: '备注' ,//string
+         	alysisDate: '分析日期' ,//long utc   
+       	 },
          ........
       ]
     }
@@ -268,6 +313,34 @@
    ```
 
 
+## 获取册本状态
+
+* URL: `v1/mobile/meter/volumeState?account={account}`
+* METHOD: `GET`
+
+* 参数:
+    * account : 登录账号  //string 
+
+* 返回内容：
+
+    ```
+    {
+      code: 0,
+      statusCode: 200,
+      message: '操作描述',
+      data: [
+         {
+            st     : '站点', //string  
+            ch     : '册本号', //string
+            state  : '状态',//number 10:'未下载',20'已下载',30:'已提交'
+            canDownload:'能下载',//number 0:'可以',1:'不能' 
+           }
+       ]
+    }
+   ```
+
+
+
 
 ## 抄表数据上传
 
@@ -311,6 +384,14 @@
           setSecreteFlag:'密钥修改标志 (1:修改成功)',//number 
           saveNewSecrete: '新密钥', // string 
           saveOldSecrete: '旧密钥', // string 
+          x:'经度',//number
+          y:'纬度',//number
+          wifiReadState:'直读状态',//number 1：直读,0:否 
+          voltage：'电压',//string
+          phoneSerialNumber:'手机序列号',//string
+          lastMeterRead  : '上次抄码', // number 
+          meterNo     : '表号', //string
+          meterMethod     : '抄表方式 5：IC, 8：1.0 无线直读,10：2.
         }
       ]
     }  
@@ -340,6 +421,61 @@
       ]
      }
     ```
+
+##提交
+
+* URL: `v1/mobile/submit/?account={account}`
+* METHOD: `POST`
+
+* 参数:
+  account:'领用人账号'
+
+
+* 请求内容:
+
+    ```
+    {
+      [
+        {  
+        st     : '站点', //string  
+        ch     : '册本号', //string   
+        highVolume :'量高',//number
+        lowVolume :'量低',//number
+        }
+      ]
+    }  
+    ```
+
+* 返回内容：
+
+    ```
+    {
+      code: 0,
+      statusCode: 200,
+      message: '操作描述',
+      data: [
+          {
+          isSuccess: 'true',
+          message: '',
+          st     : '站点', //string  
+          ch     : '册本号', //string   
+          extendInfo: 'json string' // 扩展信息, 可为空
+          },
+          {
+          isSuccess: 'false',
+          message: '失败原因', 
+          st     : '站点', //string  
+          ch     : '册本号', //string   
+          extendInfo: 'json string' // 扩展信息, 可为空
+        },
+          ....
+      ]
+     }
+    ```
+
+
+
+
 
 
 ## 停抄、补收 报修申请上传
@@ -663,12 +799,14 @@
           isSuccess: 'true',
           message: '',
           userNumber :'用户编号',  //string
+          analysisType :'分析类型',// number int
           extendInfo: 'json string' // 扩展信息, 可为空
           },
           {
           isSuccess: 'false',
           message: '失败原因',
           userNumber :'用户编号',  //string
+          analysisType :'分析类型',// number  int
           extendInfo: 'json string' // 扩展信息, 可为空
         },
           ....
